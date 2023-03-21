@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { paginate } from "../utils/paginate";
 import Pagination from "./pagination";
 import User from "./user";
+import PropTypes from "prop-types";
 
 const Users = ({ users, ...rest }) => {
   const count = users.length;
@@ -40,9 +41,11 @@ const Users = ({ users, ...rest }) => {
         currentPage={currentPage}
         onPageChange={handlePageChange}
       />
-      {/* 1,2,3 */}
     </>
   );
+};
+Users.propTypes = {
+  users: PropTypes.array
 };
 
 export default Users;

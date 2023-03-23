@@ -6,33 +6,45 @@ import PropTypes from "prop-types";
 import GroupList from "./groupList";
 import api from "../api";
 
-const Users = ({ users, ...rest }) => {
+const Users = ({ users: AllUsers, ...rest }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [professions, setProfession] = useState(api.professions.fetchAll());
-  const count = users.length;
+  const [selectedProf, setSelectedProf] = useState();
+  const count = AllUsers.length;
   const pageSize = 4;
   useEffect(() => {
     api.professions.fetchAll().then((data) => setProfession(data));
   }, []);
 
-  const handleProfessionSelect = () => {
-    console.log("1");
+  const handleProfessionSelect = (item) => {
+    setSelectedProf(item);
   };
 
   const handlePageChange = (pageIndex) => {
     setCurrentPage(pageIndex);
   };
 
-  const userCrop = paginate(users, currentPage, pageSize);
+  const filteredUsers = selectedProf
+    ? AllUsers.filter((user) => user.profession === selectedProf)
+    : AllUsers;
+
+  const usersCrop = paginate(filteredUsers, currentPage, pageSize);
+  const clearFilter = () => {
+    setSelectedProf();
+  };
   return (
     <>
       {professions && (
-        <GroupList
-          items={professions}
-          onItemSelect={handleProfessionSelect}
-          valueProperty="_id"
-          contentProperty="name"
-        />
+        <>
+          <GroupList
+            selectedItem={selectedProf}
+            items={professions}
+            onItemSelect={handleProfessionSelect}
+          />
+          <button className="btn btn-secondary mt-2" onClick={clearFilter}>
+            Очистить
+          </button>
+        </>
       )}
 
       {count > 0 && (
@@ -49,8 +61,8 @@ const Users = ({ users, ...rest }) => {
             </tr>
           </thead>
           <tbody>
-            {userCrop.map((user) => (
-              <User key={user._id} {...rest} {...user} />
+            {usersCrop.map((user) => (
+              <User {...rest} {...user} key={user._id} />
             ))}
           </tbody>
         </table>

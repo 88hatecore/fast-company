@@ -26,7 +26,15 @@ const Users = ({ users, ...rest }) => {
   const userCrop = paginate(users, currentPage, pageSize);
   return (
     <>
-      <GroupList items={professions} onItemSelect={handleProfessionSelect} />
+      {professions && (
+        <GroupList
+          items={professions}
+          onItemSelect={handleProfessionSelect}
+          valueProperty="_id"
+          contentProperty="name"
+        />
+      )}
+
       {count > 0 && (
         <table className="table">
           <thead>

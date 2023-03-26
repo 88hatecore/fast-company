@@ -6,12 +6,14 @@ import GroupList from "./groupList";
 import api from "../api";
 import SearchStatus from "./searchStatus";
 import UsersTable from "./usersTable";
+import _ from "lodash";
 
 const Users = ({ users: AllUsers, ...rest }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [professions, setProfession] = useState(api.professions.fetchAll());
   const [selectedProf, setSelectedProf] = useState();
-  const pageSize = 2;
+  const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
+  const pageSize = 8;
   useEffect(() => {
     api.professions.fetchAll().then((data) => setProfession(data));
   }, []);
@@ -27,9 +29,25 @@ const Users = ({ users: AllUsers, ...rest }) => {
     setCurrentPage(pageIndex);
   };
 
-  const filteredUsers = selectedProf ? AllUsers.filter((user) => JSON.stringify(user.profession) === JSON.stringify(selectedProf)) : AllUsers;
+  const handleSort = (item) => {
+    if (sortBy.iter === item) {
+      setSortBy((prevState) => ({
+        ...prevState,
+        order: prevState.order === "asc" ? "desc" : "asc"
+      }));
+    } else {
+      setSortBy({ iter: item, order: "asc" });
+    }
+  };
+
+  const filteredUsers = selectedProf
+    ? AllUsers.filter(
+      (user) =>
+        JSON.stringify(user.profession) === JSON.stringify(selectedProf))
+    : AllUsers;
   const count = filteredUsers.length;
-  const usersCrop = paginate(filteredUsers, currentPage, pageSize);
+  const sortedUsers = _.orderBy(filteredUsers, [sortBy.iter], [sortBy.order]);
+  const usersCrop = paginate(sortedUsers, currentPage, pageSize);
   const clearFilter = () => {
     setSelectedProf();
   };
@@ -49,7 +67,9 @@ const Users = ({ users: AllUsers, ...rest }) => {
       )}
       <div className="d-flex flex-column">
         <SearchStatus length={count} />
-        {count > 0 && <UsersTable users={usersCrop} {...rest} />}
+        {count > 0 && (
+          <UsersTable users={usersCrop} onSort={handleSort} {...rest} />
+        )}
         <div className="d-flex justify-content-center">
           <Pagination
             itemsCount={count}

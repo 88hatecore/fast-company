@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import TextField from "../common/form/textField";
 import { validator } from "../../utils/validator";
+import TextField from "../common/form/textField";
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const [data, setData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const handleChange = ({ target }) => {
@@ -74,4 +74,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

@@ -23,7 +23,7 @@ const SelectField = ({
 
   return (
     <div className="mb-4">
-      <label htmlFor="validationCustom04" className="form-label">
+      <label className="form-label">
         {label}
       </label>
       <select

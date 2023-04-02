@@ -9,6 +9,7 @@ const LoginForm = () => {
   const handleChange = (target) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
+
   const validatorConfig = {
     email: {
       isRequired: { message: "Электронная почта обязательна для заполнения" },
@@ -30,6 +31,7 @@ const LoginForm = () => {
       }
     }
   };
+
   useEffect(() => {
     validate();
   }, [data]);
@@ -72,7 +74,7 @@ const LoginForm = () => {
         disabled={!isValid}
         className="btn btn-primary w-100 mx-auto"
       >
-        Submit
+        Вход
       </button>
     </form>
   );

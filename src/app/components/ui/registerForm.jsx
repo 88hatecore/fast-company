@@ -95,7 +95,8 @@ const RegisterForm = () => {
       />
       <SelectField
         label="Выбери свою профессию"
-        defaultOption="Choose..."
+        defaultOption="..."
+        name="professions"
         options={professions}
         onChange={handleChange}
         value={data.profession}
@@ -115,6 +116,7 @@ const RegisterForm = () => {
       <MultiSelectField
         options={qulities}
         onChange={handleChange}
+        defaultValue={data.qulities}
         name="qulities"
         label="Выберите ваши качества"
       />
@@ -124,8 +126,8 @@ const RegisterForm = () => {
         name="licence"
         error={errors.licence}
       >
-        Подтвертить{" "}
-        <a href="#" className="link-underline-primary">
+        Подтвертить
+        <a className="link-underline-primary">
           лицензионное соглашение
         </a>
       </CheckBoxField>
@@ -135,7 +137,7 @@ const RegisterForm = () => {
         disabled={!isValid}
         className="btn btn-primary w-100 mx-auto"
       >
-        Submit
+        Регистрация
       </button>
     </form>
   );

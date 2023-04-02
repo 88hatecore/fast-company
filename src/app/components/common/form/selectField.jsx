@@ -9,6 +9,9 @@ const SelectField = ({
   options,
   error
 }) => {
+  const handleChange = ({ target }) => {
+    onChange({ name: target.name, value: target.value });
+  };
   const getInputClasses = () => {
     return "form-select" + (error ? " is-invalid" : "");
   };
@@ -23,15 +26,13 @@ const SelectField = ({
 
   return (
     <div className="mb-4">
-      <label className="form-label">
-        {label}
-      </label>
+      <label className="form-label">{label}</label>
       <select
         className={getInputClasses()}
         id={"validationCustom04"}
         name="profession"
         value={value}
-        onChange={onChange}
+        onChange={handleChange}
       >
         <option disabled value="">
           {defaultOption}

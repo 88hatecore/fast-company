@@ -13,16 +13,16 @@ const RegisterForm = () => {
     password: "",
     profession: "",
     sex: "male",
-    qulities: [],
+    qualities: [],
     licence: false
   });
-  const [qulities, setQulities] = useState({});
+  const [qualities, setQualities] = useState({});
   const [professions, setProfession] = useState();
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
     api.professions.fetchAll().then((data) => setProfession(data));
-    api.qualities.fetchAll().then((data) => setQulities(data));
+    api.qualities.fetchAll().then((data) => setQualities(data));
   }, []);
 
   const handleChange = (target) => {
@@ -104,9 +104,9 @@ const RegisterForm = () => {
       />
       <RadioField
         options={[
-          { name: "Male", value: "male" },
-          { name: "Female", value: "female" },
-          { name: "Other", value: "other" }
+          { name: "Мужской", value: "male" },
+          { name: "Женский", value: "female" },
+          { name: "Другой", value: "other" }
         ]}
         value={data.sex}
         name="sex"
@@ -114,10 +114,10 @@ const RegisterForm = () => {
         label="Выберите ваш пол"
       />
       <MultiSelectField
-        options={qulities}
+        options={qualities}
         onChange={handleChange}
-        defaultValue={data.qulities}
-        name="qulities"
+        defaultValue={data.qualities}
+        name="qualities"
         label="Выберите ваши качества"
       />
       <CheckBoxField

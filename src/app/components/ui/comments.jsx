@@ -10,7 +10,7 @@ const Comments = () => {
   const [comments, setComments] = useState([]);
   useEffect(() => {
     api.comments.fetchCommentsForUser(userId).then((data) => setComments(data));
-  });
+  }, []);
 
   const handleSubmit = (data) => {
     api.comments

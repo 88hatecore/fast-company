@@ -7,22 +7,22 @@ export function displayDate(data) {
     if (dayDif === 0) {
       const hourDif = dateNow.getHours() - date.getHours();
       if (hourDif === 0) {
-        const minuteDif = dateNow.getMinutes() - date.getMinutes();
+        const minutesDif = dateNow.getMinutes() - date.getMinutes();
 
-        if (minuteDif >= 0 && minuteDif < 5) return "1 минуту назад";
-        if (minuteDif >= 5 && minuteDif < 10) return "5 минут назад";
-        if (minuteDif >= 10 && minuteDif < 30) {
+        if (minutesDif >= 0 && minutesDif < 5) return "1 минуту назад";
+        if (minutesDif >= 5 && minutesDif < 10) return "5 минут назад";
+        if (minutesDif >= 10 && minutesDif < 30) {
           return "10 минут назад";
         }
         return "30 минут назад";
       }
-      return `${date.getHours()}:${data.getMinutes()}`;
+      return `${date.getHours()}:${date.getMinutes()}`;
     }
     return `${date.getDate()} ${date.toLocaleString("default", {
       month: "long"
     })}`;
   }
   return (
-    date.getFullYear() + "." + (date.getMonth() + 1) + "." + date.getDate()
+    date.getFullYear() + "." + (date.getMonth() + 1) + "_" + date.getDate()
   );
 }

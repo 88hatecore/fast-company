@@ -4,7 +4,7 @@ import api from "../../../api";
 import UserCard from "../../ui/userCard";
 import QualitiesCard from "../../ui/QualitiesCard";
 import MeetingsCard from "../../ui/meetingsCard";
-import Comments from "../../ui/qualities/comments";
+import Comments from "../../ui/comments";
 
 const UserPage = ({ userId }) => {
   const [user, setUser] = useState();

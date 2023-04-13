@@ -5,6 +5,7 @@ import Login from "./layouts/login";
 import Main from "./layouts/main";
 import Users from "./layouts/users";
 import { ToastContainer } from "react-toastify";
+import { ProfessionProvider } from "../hooks/useProfession";
 
 function App() {
   return (
@@ -12,8 +13,10 @@ function App() {
       <NavBar />
       <Switch>
         <Route exact path="/" component={Main} />
-        <Route path="/login/:type?" component={Login} />
-        <Route path="/users/:userId?/:edit?" component={Users} />
+        <ProfessionProvider>
+          <Route path="/login/:type?" component={Login} />
+          <Route path="/users/:userId?/:edit?" component={Users} />
+        </ProfessionProvider>
         <Redirect to="/" />
       </Switch>
       <ToastContainer />

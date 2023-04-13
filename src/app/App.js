@@ -4,6 +4,7 @@ import NavBar from "./components/ui/navBar";
 import Login from "./layouts/login";
 import Main from "./layouts/main";
 import Users from "./layouts/users";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/users/:userId?/:edit?" component={Users} />
         <Redirect to="/" />
       </Switch>
+      <ToastContainer />
     </div>
   );
 }

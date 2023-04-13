@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import userService from "../services/user.service";
 import { toast } from "react-toastify";
 
-const UserContenxt = React.createContext();
+const UserContext = React.createContext();
 
 export const useUser = () => {
-  return useContext(UserContenxt);
+  return useContext(UserContext);
 };
 
 const UserProvider = ({ children }) => {
@@ -39,9 +39,9 @@ const UserProvider = ({ children }) => {
   }
 
   return (
-    <UserContenxt.Provider value={{ users }}>
+    <UserContext.Provider value={{ users }}>
       {!isLoading ? children : "Загрузка ..."}
-    </UserContenxt.Provider>
+    </UserContext.Provider>
   );
 };
 

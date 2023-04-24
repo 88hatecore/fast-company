@@ -57,7 +57,7 @@ const AuthProvider = ({ children }) => {
     history.push("/");
   }
 
-  function randimInt(min, max) {
+  function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
@@ -81,8 +81,8 @@ const AuthProvider = ({ children }) => {
       await createUser({
         _id: data.localId,
         email,
-        rate: randimInt(1, 5),
-        completedMeetings: randimInt(0, 200),
+        rate: randomInt(1, 5),
+        completedMeetings: randomInt(0, 200),
         img: `https://avatars.dicebear.com/api/adventurer/${(Math.random() + 1)
           .toString(36)
           .substring(7)}.svg`,

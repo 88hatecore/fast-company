@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { displayDate } from "../../../utils/displayDate";
 
-import { useAuth } from "../../../../hooks/useAuth";
-import { getUsersById } from "../../../store/users";
+import { getCurrentUserId, getUsersById } from "../../../store/users";
 import { useSelector } from "react-redux";
 
 const Comment = ({
@@ -13,7 +12,7 @@ const Comment = ({
   userId,
   onRemove
 }) => {
-  const { currentUser } = useAuth();
+  const currentUserId = useSelector(getCurrentUserId());
   const user = useSelector(getUsersById(userId));
 
   return (
@@ -35,7 +34,7 @@ const Comment = ({
                     {user && user.name}{" "}
                     <span className="small">- {displayDate(created)}</span>
                   </p>
-                  {currentUser._id === userId && (
+                  {currentUserId === userId && (
                     <button
                       className="btn btn-sm text-primary d-flex align-items-center"
                       onClick={() => onRemove(id)}

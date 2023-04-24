@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { displayDate } from "../../../utils/displayDate";
-
-import { getCurrentUserId, getUsersById } from "../../../store/users";
 import { useSelector } from "react-redux";
+import { getCurrentUserId, getUserById } from "../../../store/users";
 
 const Comment = ({
   content,
@@ -13,7 +12,7 @@ const Comment = ({
   onRemove
 }) => {
   const currentUserId = useSelector(getCurrentUserId());
-  const user = useSelector(getUsersById(userId));
+  const user = useSelector(getUserById(userId));
 
   return (
     <div className="bg-light card-body  mb-3">
@@ -21,7 +20,7 @@ const Comment = ({
         <div className="col">
           <div className="d-flex flex-start ">
             <img
-              src={user.img}
+              src={user.image}
               className="rounded-circle shadow-1-strong me-3"
               alt="avatar"
               width="65"
@@ -52,12 +51,13 @@ const Comment = ({
     </div>
   );
 };
-
 Comment.propTypes = {
   content: PropTypes.string,
+  edited_at: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   created_at: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  _id: PropTypes.string,
   userId: PropTypes.string,
-  onRemove: PropTypes.func
+  onRemove: PropTypes.func,
+  _id: PropTypes.string
 };
+
 export default Comment;

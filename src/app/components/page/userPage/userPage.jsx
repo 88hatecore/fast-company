@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import UserCard from "../../ui/userCard";
-import QualitiesCard from "../../ui/QualitiesCard";
+import QualitiesCard from "../../ui/qualitiesCard";
 import MeetingsCard from "../../ui/meetingsCard";
 import Comments from "../../ui/comments";
-import { CommentsProvider } from "../../../../hooks/useComments";
+import { CommentsProvider } from "../../../hooks/useComments";
 import { useSelector } from "react-redux";
-import { getUsersById } from "../../../store/users";
+import { getUserById } from "../../../store/users";
 
 const UserPage = ({ userId }) => {
-  const user = useSelector(getUsersById(userId));
+  const user = useSelector(getUserById(userId));
 
   if (user) {
     return (
@@ -29,11 +29,12 @@ const UserPage = ({ userId }) => {
       </div>
     );
   } else {
-    return <h1>Loading ...</h1>;
+    return <h1>Загрузка</h1>;
   }
 };
 
 UserPage.propTypes = {
   userId: PropTypes.string.isRequired
 };
+
 export default UserPage;

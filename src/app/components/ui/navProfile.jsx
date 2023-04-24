@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getCurrentUserData } from "../../store/users";
 
-const NavProfile = () => {
+function NavProfile() {
   const currentUser = useSelector(getCurrentUserData());
   const [isOpen, setOpen] = useState(false);
   const toggleMenu = () => {
@@ -15,22 +15,22 @@ const NavProfile = () => {
       <div className="btn dropdown-toggle d-flex align-items-center">
         <div className="me-2">{currentUser.name}</div>
         <img
-          src={currentUser.img}
-          height="40"
+          src={currentUser.image}
           alt=""
+          height="40"
           className="img-responsive rounded-circle"
         />
       </div>
       <div className={"w-100 dropdown-menu" + (isOpen ? " show" : "")}>
         <Link to={`/users/${currentUser._id}`} className="dropdown-item">
-          Профиль
+          Profile
         </Link>
         <Link to="/logout" className="dropdown-item">
-          Выйти
+          Log Out
         </Link>
       </div>
     </div>
   );
-};
+}
 
 export default NavProfile;

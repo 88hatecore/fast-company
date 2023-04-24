@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { validator } from "../../utils/validator";
 import TextField from "../common/form/textField";
 import SelectField from "../common/form/selectField";
@@ -21,9 +21,11 @@ const RegisterForm = () => {
     qualities: [],
     licence: false
   });
-
   const qualities = useSelector(getQualities());
-  const qualitiesList = qualities.map((q) => ({ label: q.name, value: q._id }));
+  const qualitiesList = qualities.map((q) => ({
+    label: q.name,
+    value: q._id
+  }));
   const professions = useSelector(getProfessions());
   const professionsList = professions.map((p) => ({
     label: p.name,
@@ -32,29 +34,38 @@ const RegisterForm = () => {
   const [errors, setErrors] = useState({});
 
   const handleChange = (target) => {
-    setData((prevState) => ({ ...prevState, [target.name]: target.value }));
+    setData((prevState) => ({
+      ...prevState,
+      [target.name]: target.value
+    }));
   };
   const validatorConfig = {
     email: {
-      isRequired: { message: "Поле — email, обязательно для заполнения" },
+      isRequired: {
+        message: "Электронная почта обязательна для заполнения"
+      },
       isEmail: {
         message: "Email введен некорректно"
       }
     },
     name: {
-      isRequired: { message: "Поле — имя, обязательно для заполнения" },
+      isRequired: {
+        message: "Имя обязательно для заполнения"
+      },
       min: {
         message: "Имя должно состоять минимум из 3 символов",
         value: 3
       }
     },
     password: {
-      isRequired: { message: "Поле — пароль, обязателено для заполнения" },
+      isRequired: {
+        message: "Пароль обязателен для заполнения"
+      },
       isCapitalSymbol: {
         message: "Пароль должен содержать хотя бы одну заглавную букву"
       },
       isContainDigit: {
-        message: "Пароль должен содержать хотя бы одну цифру"
+        message: "Пароль должен содержать хотя бы одно число"
       },
       min: {
         message: "Пароль должен состоять минимум из 8 символов",
@@ -69,7 +80,7 @@ const RegisterForm = () => {
     licence: {
       isRequired: {
         message:
-          "Вы не можете использовать наш сервис, без подтверждения лицензионного соглашения"
+          "Вы не можете использовать наш сервис без подтверждения лицензионного соглашения"
       }
     }
   };
@@ -87,7 +98,10 @@ const RegisterForm = () => {
     e.preventDefault();
     const isValid = validate();
     if (!isValid) return;
-    const newData = { ...data, qualities: data.qualities.map((q) => q.value) };
+    const newData = {
+      ...data,
+      qualities: data.qualities.map((q) => q.value)
+    };
     dispatch(signUp(newData));
   };
 
@@ -101,6 +115,13 @@ const RegisterForm = () => {
         error={errors.email}
       />
       <TextField
+        label="Имя"
+        name="name"
+        value={data.name}
+        onChange={handleChange}
+        error={errors.name}
+      />
+      <TextField
         label="Пароль"
         type="password"
         name="password"
@@ -108,27 +129,20 @@ const RegisterForm = () => {
         onChange={handleChange}
         error={errors.password}
       />
-      <TextField
-        label="Имя"
-        name="name"
-        value={data.name}
-        onChange={handleChange}
-        error={errors.name}
-      />
       <SelectField
         label="Выбери свою профессию"
-        defaultOption="..."
-        name="profession"
+        defaultOption="Choose..."
         options={professionsList}
+        name="profession"
         onChange={handleChange}
         value={data.profession}
         error={errors.profession}
       />
       <RadioField
         options={[
-          { name: "Мужской", value: "male" },
-          { name: "Женский", value: "female" },
-          { name: "Другой", value: "other" }
+          { name: "Male", value: "male" },
+          { name: "Female", value: "female" },
+          { name: "Other", value: "other" }
         ]}
         value={data.sex}
         name="sex"
@@ -148,16 +162,14 @@ const RegisterForm = () => {
         name="licence"
         error={errors.licence}
       >
-        Подтвертить
-        <a className="link-underline-primary">лицензионное соглашение</a>
+        Подтвердить <a>лицензионное соглашение</a>
       </CheckBoxField>
-
       <button
+        className="btn btn-primary w-100 mx-auto"
         type="submit"
         disabled={!isValid}
-        className="btn btn-primary w-100 mx-auto"
       >
-        Регистрация
+        Submit
       </button>
     </form>
   );

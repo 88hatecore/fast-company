@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { validator } from "../../../utils/validator";
 import TextField from "../../common/form/textField";
@@ -6,7 +6,7 @@ import SelectField from "../../common/form/selectField";
 import RadioField from "../../common/form/radioField";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backButton";
-import { useAuth } from "../../../../hooks/useAuth";
+import { useAuth } from "../../../hooks/useAuth";
 import { useSelector } from "react-redux";
 import {
   getQualities,
@@ -26,17 +26,18 @@ const EditUserPage = () => {
   const { updateUserData } = useAuth();
   const qualities = useSelector(getQualities());
   const qualitiesLoading = useSelector(getQualitiesLoadingStatus());
-  const professions = useSelector(getProfessions());
-  const professionsLoading = useSelector(getProfessionsLoadingStatus());
   const qualitiesList = qualities.map((q) => ({
     label: q.name,
     value: q._id
   }));
+  const professions = useSelector(getProfessions());
+  const professionLoading = useSelector(getProfessionsLoadingStatus());
   const professionsList = professions.map((p) => ({
     label: p.name,
     value: p._id
   }));
   const [errors, setErrors] = useState({});
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const isValid = validate();
@@ -45,9 +46,9 @@ const EditUserPage = () => {
       ...data,
       qualities: data.qualities.map((q) => q.value)
     });
+
     history.push(`/users/${currentUser._id}`);
   };
-
   function getQualitiesListByIds(qualitiesIds) {
     const qualitiesArray = [];
     for (const qualId of qualitiesIds) {
@@ -60,7 +61,6 @@ const EditUserPage = () => {
     }
     return qualitiesArray;
   }
-
   const transformData = (data) => {
     const result = getQualitiesListByIds(data).map((qual) => ({
       label: qual.name,
@@ -68,16 +68,14 @@ const EditUserPage = () => {
     }));
     return result;
   };
-
   useEffect(() => {
-    if (!professionsLoading && !qualitiesLoading && currentUser && !data) {
+    if (!professionLoading && !qualitiesLoading && currentUser && !data) {
       setData({
         ...currentUser,
         qualities: transformData(currentUser.qualities)
       });
     }
-  }, [professionsLoading, qualitiesLoading, currentUser, data]);
-
+  }, [professionLoading, qualitiesLoading, currentUser, data]);
   useEffect(() => {
     if (data && isLoading) {
       setIsLoading(false);
@@ -86,7 +84,9 @@ const EditUserPage = () => {
 
   const validatorConfig = {
     email: {
-      isRequired: { message: "Электронная почта обязательна для заполнения" },
+      isRequired: {
+        message: "Электронная почта обязательна для заполнения"
+      },
       isEmail: {
         message: "Email введен некорректно"
       }
@@ -97,26 +97,21 @@ const EditUserPage = () => {
       }
     }
   };
-
   useEffect(() => {
     validate();
   }, [data]);
-
   const handleChange = (target) => {
     setData((prevState) => ({
       ...prevState,
       [target.name]: target.value
     }));
   };
-
   const validate = () => {
     const errors = validator(data, validatorConfig);
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };
-
   const isValid = Object.keys(errors).length === 0;
-
   return (
     <div className="container mt-5">
       <BackHistoryButton />
@@ -140,18 +135,18 @@ const EditUserPage = () => {
               />
               <SelectField
                 label="Выбери свою профессию"
-                defaultOption="..."
-                name="professions"
+                defaultOption="Choose..."
                 options={professionsList}
+                name="profession"
                 onChange={handleChange}
                 value={data.profession}
                 error={errors.profession}
               />
               <RadioField
                 options={[
-                  { name: "Мужской", value: "male" },
-                  { name: "Женский", value: "female" },
-                  { name: "Другой", value: "other" }
+                  { name: "Male", value: "male" },
+                  { name: "Female", value: "female" },
+                  { name: "Other", value: "other" }
                 ]}
                 value={data.sex}
                 name="sex"
@@ -159,9 +154,9 @@ const EditUserPage = () => {
                 label="Выберите ваш пол"
               />
               <MultiSelectField
+                defaultValue={data.qualities}
                 options={qualitiesList}
                 onChange={handleChange}
-                defaultValue={data.qualities}
                 name="qualities"
                 label="Выберите ваши качества"
               />
@@ -174,7 +169,7 @@ const EditUserPage = () => {
               </button>
             </form>
           ) : (
-            "Загрузка..."
+            "Loading..."
           )}
         </div>
       </div>

@@ -5,8 +5,9 @@ import { useSelector } from "react-redux";
 import { getCurrentUserId } from "../../store/users";
 
 const UserCard = ({ user }) => {
-  const currentUserId = useSelector(getCurrentUserId());
   const history = useHistory();
+  const currentUserId = useSelector(getCurrentUserId());
+
   const handleClick = () => {
     history.push(history.location.pathname + "/edit");
   };
@@ -14,18 +15,16 @@ const UserCard = ({ user }) => {
     <div className="card mb-3">
       <div className="card-body">
         {currentUserId === user._id && (
-          <button className="position-absolute top-0 end-0 btn btn-light btn-sm">
-            <i className="bi bi-gear" onClick={handleClick}></i>
+          <button
+            className="position-absolute top-0 end-0 btn btn-light btn-sm"
+            onClick={handleClick}
+          >
+            <i className="bi bi-gear"></i>
           </button>
         )}
+
         <div className="d-flex flex-column align-items-center text-center position-relative">
-          <img
-            src={user.img}
-            className="rounded-circle shadow-1-strong me-3"
-            alt="avatar"
-            width="65"
-            height="65"
-          />
+          <img src={user.image} className="rounded-circle" width="150" />
           <div className="mt-3">
             <h4>{user.name}</h4>
             <p className="text-secondary mb-1">{user.profession.name}</p>
@@ -43,7 +42,6 @@ const UserCard = ({ user }) => {
     </div>
   );
 };
-
 UserCard.propTypes = {
   user: PropTypes.object
 };

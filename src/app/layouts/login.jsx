@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import LoginForm from "../components/ui/loginForm";
 import { useParams } from "react-router-dom";
+import LoginForm from "../components/ui/loginForm";
 import RegisterForm from "../components/ui/registerForm";
 
 const Login = () => {
@@ -8,7 +8,7 @@ const Login = () => {
   const [formType, setFormType] = useState(
     type === "register" ? type : "login"
   );
-  const toggleFormType = () => {
+  const toggleFormType = (params) => {
     setFormType((prevState) =>
       prevState === "register" ? "login" : "register"
     );
@@ -23,28 +23,20 @@ const Login = () => {
               <h3 className="mb-4">Регистрация</h3>
               <RegisterForm />
               <p>
-                Уже есть аккаунт?
-                <a
-                  className="link-underline-primary"
-                  role="button"
-                  onClick={toggleFormType}
-                >
-                  Вход
+                У вас уже есть аккаунт?
+                <a role="button" onClick={toggleFormType}>
+                  Войти
                 </a>
               </p>
             </>
           ) : (
             <>
-              <h3 className="mb-4">Авторизация</h3>
+              <h3 className="mb-4">Вход на сайт</h3>
               <LoginForm />
               <p>
-                Нет аккаунта?
-                <a
-                  className="link-underline-primary"
-                  role="button"
-                  onClick={toggleFormType}
-                >
-                  Зарегистрируйтесь
+                У вас нет аккаунта?
+                <a role="button" onClick={toggleFormType}>
+                  Зарегистрироваться
                 </a>
               </p>
             </>

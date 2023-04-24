@@ -1,7 +1,7 @@
 export function validator(data, config) {
-  let statusValidate;
   const errors = {};
   function validate(validateMethod, data, config) {
+    let statusValidate;
     switch (validateMethod) {
       case "isRequired": {
         if (typeof data === "boolean") {
@@ -22,8 +22,8 @@ export function validator(data, config) {
         break;
       }
       case "isContainDigit": {
-        const digitRegExt = /\d+/g;
-        statusValidate = !digitRegExt.test(data);
+        const digitRegExp = /\d+/g;
+        statusValidate = !digitRegExp.test(data);
         break;
       }
       case "min": {

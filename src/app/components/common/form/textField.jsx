@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 const TextField = ({ label, type, name, value, onChange, error }) => {
   const [showPassword, setShowPassword] = useState(false);
+
   const handleChange = ({ target }) => {
     onChange({ name: target.name, value: target.value });
   };
@@ -14,7 +15,7 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
   };
   return (
     <div className="mb-4">
-      <label htmlFor={name}> {label}</label>
+      <label htmlFor={name}>{label}</label>
       <div className="input-group has-validation">
         <input
           type={showPassword ? "text" : type}
@@ -49,4 +50,5 @@ TextField.propTypes = {
   onChange: PropTypes.func,
   error: PropTypes.string
 };
+
 export default TextField;

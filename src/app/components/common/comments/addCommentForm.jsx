@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import TextAreaField from "../form/textAreaField";
 import { validator } from "../../../utils/validator";
+import PropTypes from "prop-types";
 
 const AddCommentForm = ({ onSubmit }) => {
   const [data, setData] = useState({});
@@ -12,7 +12,6 @@ const AddCommentForm = ({ onSubmit }) => {
       [target.name]: target.value
     }));
   };
-
   const validatorConfig = {
     content: {
       isRequired: {
@@ -26,12 +25,10 @@ const AddCommentForm = ({ onSubmit }) => {
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };
-
   const clearForm = () => {
     setData({});
     setErrors({});
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const isValid = validate();
@@ -39,10 +36,9 @@ const AddCommentForm = ({ onSubmit }) => {
     onSubmit(data);
     clearForm();
   };
-
   return (
     <div>
-      <h2>Новый комментарий</h2>
+      <h2>New comment</h2>
       <form onSubmit={handleSubmit}>
         <TextAreaField
           value={data.content || ""}
@@ -58,8 +54,8 @@ const AddCommentForm = ({ onSubmit }) => {
     </div>
   );
 };
-
 AddCommentForm.propTypes = {
   onSubmit: PropTypes.func
 };
+
 export default AddCommentForm;

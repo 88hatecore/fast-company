@@ -1,25 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { paginate } from "../../../utils/paginate";
 import Pagination from "../../common/pagination";
-import PropTypes from "prop-types";
 import GroupList from "../../common/groupList";
 import SearchStatus from "../../ui/searchStatus";
-import UsersTable from "../../ui/usersTable";
+import UserTable from "../../ui/usersTable";
 import _ from "lodash";
+import { useSelector } from "react-redux";
 import {
   getProfessions,
   getProfessionsLoadingStatus
 } from "../../../store/professions";
-import { useSelector } from "react-redux";
 import { getCurrentUserId, getUsersList } from "../../../store/users";
 
 const UsersListPage = () => {
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
+
   const professions = useSelector(getProfessions());
   const professionsLoading = useSelector(getProfessionsLoadingStatus());
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchQuery, setSeacrhQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedProf, setSelectedProf] = useState();
   const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
   const pageSize = 8;
@@ -44,13 +45,12 @@ const UsersListPage = () => {
   }, [selectedProf, searchQuery]);
 
   const handleProfessionSelect = (item) => {
-    if (searchQuery !== "") setSeacrhQuery("");
+    if (searchQuery !== "") setSearchQuery("");
     setSelectedProf(item);
   };
-
   const handleSearchQuery = ({ target }) => {
     setSelectedProf(undefined);
-    setSeacrhQuery(target.value);
+    setSearchQuery(target.value);
   };
 
   const handlePageChange = (pageIndex) => {
@@ -73,9 +73,8 @@ const UsersListPage = () => {
               JSON.stringify(user.profession) === JSON.stringify(selectedProf)
           )
         : data;
-      return filteredUsers.filter((u) => u._id !== currentUserId._id);
+      return filteredUsers.filter((u) => u._id !== currentUserId);
     }
-
     const filteredUsers = filterUsers(users);
     const count = filteredUsers.length;
     const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
@@ -103,12 +102,12 @@ const UsersListPage = () => {
           <input
             type="text"
             name="searchQuery"
-            placeholder="Поиск ..."
+            placeholder="Поиск..."
             onChange={handleSearchQuery}
             value={searchQuery}
           />
           {count > 0 && (
-            <UsersTable
+            <UserTable
               users={usersCrop}
               onSort={handleSort}
               selectedSort={sortBy}

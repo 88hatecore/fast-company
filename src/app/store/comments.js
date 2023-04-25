@@ -1,5 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAction, createSlice } from "@reduxjs/toolkit";
 import commentService from "../services/comment.service";
+import { getCurrentUserId } from "./users";
+import { nanoid } from "nanoid";
 
 const commentsSlice = createSlice({
   name: "comments",
@@ -19,13 +21,21 @@ const commentsSlice = createSlice({
     commentsRequestFailed: (state, action) => {
       state.error = action.payload;
       state.isLoading = false;
+    },
+    commentCreated: (state, action) => {
+      state.entities.push(action.payload);
     }
   }
 });
 
 const { reducer: commentsReducer, actions } = commentsSlice;
-const { commentsRequested, commentsRecived, commentsRequestFailed } = actions;
-
+const {
+  commentsRequested,
+  commentsRecived,
+  commentsRequestFailed,
+  commentCreated
+} = actions;
+const addCommentRequested = createAction("comments/addCommentRequested");
 export const loadCommentsList = (userId) => async (dispatch) => {
   dispatch(commentsRequested());
   try {
@@ -36,6 +46,21 @@ export const loadCommentsList = (userId) => async (dispatch) => {
   }
 };
 
+export const createComment = (payload) => async (dispatch, getState) => {
+  dispatch(addCommentRequested(payload));
+  const comment = {
+    ...payload,
+    _id: nanoid(),
+    created_at: Date.now(),
+    userId: getCurrentUserId()(getState())
+  };
+  try {
+    const { content } = await commentService.createComment(comment);
+    dispatch(commentCreated(content));
+  } catch (error) {
+    dispatch(commentsRequestFailed(error.message));
+  }
+};
 export const getComments = () => (state) => state.comments.entities;
 export const getCommentsLoadingStatus = () => (state) =>
   state.comments.isLoading;

@@ -170,7 +170,7 @@ const EditUserPage = () => {
               </button>
             </form>
           ) : (
-            "Loading..."
+            "Загрузка..."
           )}
         </div>
       </div>

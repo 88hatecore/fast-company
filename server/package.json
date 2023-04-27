@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "cross-env NODE_ENV=production node app.js",
+    "serve": "nodemon NODE_ENV=development app.js"
   },
   "repository": {
     "type": "git",
@@ -24,5 +25,9 @@
     "config": "^3.3.9",
     "express": "^4.18.2",
     "mongoose": "^7.0.5"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.22"
   }
 }

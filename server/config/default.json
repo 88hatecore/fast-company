@@ -1,3 +1,4 @@
 {
-  "port": 8080
+  "port": 8080,
+  "mongoUri": "mongodb+srv://hatecore:2401195472@cluster0.evjnvi5.mongodb.net/app"
 }

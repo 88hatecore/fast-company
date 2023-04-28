@@ -1,4 +1,6 @@
 {
   "port": 8080,
-  "mongoUri": "mongodb+srv://hatecore:2401195472@cluster0.evjnvi5.mongodb.net/app"
+  "mongoUri": "mongodb+srv://hatecore:2401195472@cluster0.evjnvi5.mongodb.net/app",
+  "accessSecret": "super secret from backend",
+  "refreshSecret": "super refresh key"
 }

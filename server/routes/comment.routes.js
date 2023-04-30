@@ -10,7 +10,7 @@ router
       const { orderBy, equalTo } = req.query;
       const list = await Comment.find({ [orderBy]: equalTo });
       res.send(list);
-    } catch (error) {
+    } catch (e) {
       res.status(500).json({
         message: "На сервере произошла ошибка. Попробуйте позже",
       });

@@ -15,10 +15,10 @@ app.use("/api", routes);
 
 const PORT = config.get("port") ?? 8080;
 
-// if (process.env.NODE_ENV === "production") {
-//   console.log("Production");
+// if (process.env.NODE_ENV === 'production') {
+//   console.log('Production')
 // } else {
-//   console.log("Development");
+//   console.log('Development')
 // }
 
 async function start() {
@@ -29,10 +29,10 @@ async function start() {
     await mongoose.connect(config.get("mongoUri"));
     console.log(chalk.green(`MongoDB connected.`));
     app.listen(PORT, () =>
-      console.log(chalk.green(`Server has been started on port: ${PORT}...`))
+      console.log(chalk.green(`Server has been started on port ${PORT}...`))
     );
-  } catch (error) {
-    console.log(chalk.red(error.message));
+  } catch (e) {
+    console.log(chalk.red(e.message));
     process.exit(1);
   }
 }

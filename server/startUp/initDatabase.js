@@ -3,7 +3,6 @@
 
 const Profession = require("../models/Profession");
 const Quality = require("../models/Quality");
-
 const professionMock = require("../mock/professions.json");
 const qualitiesMock = require("../mock/qualities.json");
 
@@ -13,8 +12,8 @@ module.exports = async () => {
     await createInitialEntity(Profession, professionMock);
   }
 
-  const quality = await Quality.find();
-  if (quality.length !== qualitiesMock.length) {
+  const qualities = await Quality.find();
+  if (qualities.length !== professionMock.length) {
     await createInitialEntity(Quality, qualitiesMock);
   }
 };
@@ -25,11 +24,11 @@ async function createInitialEntity(Model, data) {
     data.map(async (item) => {
       try {
         delete item._id;
-        const newIten = new Model(item);
-        await newIten.save();
-        return newIten;
-      } catch (error) {
-        return error;
+        const newItem = new Model(item);
+        await newItem.save();
+        return newItem;
+      } catch (e) {
+        return e;
       }
     })
   );

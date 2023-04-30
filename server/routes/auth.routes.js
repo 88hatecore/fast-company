@@ -1,9 +1,9 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const { check, validationResult } = require("express-validator");
+const User = require("../models/User");
 const { generateUserData } = require("../utils/helpers");
 const tokenService = require("../services/token.service");
-const User = require("../models/User");
 const router = express.Router({ mergeParams: true });
 
 router.post("/signUp", [
@@ -20,9 +20,9 @@ router.post("/signUp", [
           },
         });
       }
-      const { email, password } = req.body;
 
-      const existingUser = await User.findOne({ email: email });
+      const { email, password } = req.body;
+      const existingUser = await User.findOne({ email });
 
       if (existingUser) {
         return res.status(400).json({
@@ -47,7 +47,7 @@ router.post("/signUp", [
       res.status(201).send({ ...tokens, userId: newUser._id });
     } catch (e) {
       res.status(500).json({
-        message: "На сервере произошла ошибкаю Попробуйте позже",
+        message: "На сервере произошла ошибка. Попробуйте позже",
       });
     }
   },
@@ -69,7 +69,6 @@ router.post("/signInWithPassword", [
       }
 
       const { email, password } = req.body;
-
       const existingUser = await User.findOne({ email });
 
       if (!existingUser) {

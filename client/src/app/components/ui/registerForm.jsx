@@ -172,7 +172,7 @@ const RegisterForm = () => {
         type="submit"
         disabled={!isValid}
       >
-        Submit
+        Отправить
       </button>
     </form>
   );

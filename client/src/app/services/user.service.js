@@ -26,4 +26,5 @@ const userService = {
     return data;
   }
 };
+
 export default userService;

@@ -19,7 +19,7 @@ const professionsSlice = createSlice({
       state.lastFetch = Date.now();
       state.isLoading = false;
     },
-    professionsRequestFailed: (state, action) => {
+    professionsRequestFiled: (state, action) => {
       state.error = action.payload;
       state.isLoading = false;
     }
@@ -27,22 +27,22 @@ const professionsSlice = createSlice({
 });
 
 const { reducer: professionsReducer, actions } = professionsSlice;
-const { professionsRequested, professionsRecived, professionsRequestFailed } =
+const { professionsRequested, professionsRecived, professionsRequestFiled } =
   actions;
 
 export const loadProfessionsList = () => async (dispatch, getState) => {
   const { lastFetch } = getState().professions;
   if (isOutdated(lastFetch)) {
+    console.log("lastFetch", lastFetch);
     dispatch(professionsRequested());
     try {
       const { content } = await professionService.get();
       dispatch(professionsRecived(content));
     } catch (error) {
-      dispatch(professionsRequestFailed(error.message));
+      dispatch(professionsRequestFiled(error.message));
     }
   }
 };
-
 export const getProfessions = () => (state) => state.professions.entities;
 export const getProfessionsLoadingStatus = () => (state) =>
   state.professions.isLoading;
@@ -51,5 +51,4 @@ export const getProfessionById = (id) => (state) => {
     return state.professions.entities.find((p) => p._id === id);
   }
 };
-
 export default professionsReducer;

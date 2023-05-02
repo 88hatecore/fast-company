@@ -5,7 +5,7 @@ const router = express.Router({ mergeParams: true });
 
 router.patch("/:userId", auth, async (req, res) => {
   try {
-    const { userId } = req.params;
+    const { userId } = req.params
     if (userId === req.user._id) {
       const updatedUser = await User.findByIdAndUpdate(userId, req.body, {
         new: true,
@@ -20,6 +20,7 @@ router.patch("/:userId", auth, async (req, res) => {
     });
   }
 });
+
 router.get("/", auth, async (req, res) => {
   try {
     const list = await User.find();

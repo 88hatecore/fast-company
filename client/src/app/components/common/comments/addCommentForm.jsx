@@ -25,6 +25,7 @@ const AddCommentForm = ({ onSubmit }) => {
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };
+
   const clearForm = () => {
     setData({});
     setErrors({});
@@ -34,11 +35,13 @@ const AddCommentForm = ({ onSubmit }) => {
     const isValid = validate();
     if (!isValid) return;
     onSubmit(data);
+    console.log(data);
     clearForm();
   };
+
   return (
     <div>
-      <h2>New comment</h2>
+      <h2>Новый комментарий</h2>
       <form onSubmit={handleSubmit}>
         <TextAreaField
           value={data.content || ""}

@@ -5,7 +5,7 @@ import SelectField from "../common/form/selectField";
 import RadioField from "../common/form/radioField";
 import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getQualities } from "../../store/qualities";
 import { getProfessions } from "../../store/professions";
 import { signUp } from "../../store/users";
@@ -132,8 +132,8 @@ const RegisterForm = () => {
       <SelectField
         label="Выбери свою профессию"
         defaultOption="Выберите..."
-        options={professionsList}
         name="profession"
+        options={professionsList}
         onChange={handleChange}
         value={data.profession}
         error={errors.profession}
@@ -152,7 +152,6 @@ const RegisterForm = () => {
       <MultiSelectField
         options={qualitiesList}
         onChange={handleChange}
-        defaultValue={data.qualities}
         name="qualities"
         label="Выберите ваши качества"
       />
@@ -168,9 +167,9 @@ const RegisterForm = () => {
         </a>
       </CheckBoxField>
       <button
-        className="btn btn-primary w-100 mx-auto"
         type="submit"
         disabled={!isValid}
+        className="btn btn-primary w-100 mx-auto"
       >
         Отправить
       </button>

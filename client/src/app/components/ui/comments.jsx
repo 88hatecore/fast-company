@@ -1,7 +1,6 @@
 import { orderBy } from "lodash";
 import React, { useEffect } from "react";
 import CommentsList, { AddCommentForm } from "../common/comments";
-import { useDispatch, useSelector } from "react-redux";
 import {
   createComment,
   getComments,
@@ -9,7 +8,8 @@ import {
   loadCommentsList,
   removeComment
 } from "../../store/comments";
-import { useParams } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const Comments = () => {
   const { userId } = useParams();

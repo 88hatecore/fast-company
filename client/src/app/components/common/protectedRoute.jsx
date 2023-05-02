@@ -1,9 +1,9 @@
 import React from "react";
-import { Route, Redirect } from "react-router";
+import { Route, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { getIsLoggedIn } from "../../store/users";
-function ProtectedRoute({ component: Component, children, ...rest }) {
+const ProtectedRoute = ({ component: Component, children, ...rest }) => {
   const isLoggedIn = useSelector(getIsLoggedIn());
 
   return (
@@ -26,7 +26,7 @@ function ProtectedRoute({ component: Component, children, ...rest }) {
       }}
     />
   );
-}
+};
 ProtectedRoute.propTypes = {
   component: PropTypes.func,
   location: PropTypes.object,

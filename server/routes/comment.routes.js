@@ -24,6 +24,7 @@ router
       });
       res.status(201).send(newComment);
     } catch (e) {
+      console.log(e.message);
       res.status(500).json({
         message: "На сервере произошла ошибка. Попробуйте позже",
       });

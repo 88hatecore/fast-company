@@ -2,6 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import configFile from "../config.json";
 import authService from "./auth.service";
+
 import localStorageService from "./localStorage.service";
 
 const http = axios.create({
@@ -20,6 +21,7 @@ http.interceptors.request.use(
         (containSlash ? config.url.slice(0, -1) : config.url) + ".json";
       if (isExpired) {
         const data = await authService.refresh();
+
         localStorageService.setTokens({
           refreshToken: data.refresh_token,
           idToken: data.id_token,
@@ -72,6 +74,7 @@ http.interceptors.response.use(
       error.response &&
       error.response.status >= 400 &&
       error.response.status < 500;
+
     if (!expectedErrors) {
       console.log(error);
       toast.error("Somthing was wrong. Try it later");
@@ -79,7 +82,6 @@ http.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
 const httpService = {
   get: http.get,
   post: http.post,

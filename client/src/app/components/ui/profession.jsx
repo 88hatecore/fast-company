@@ -9,9 +9,10 @@ import {
 const Profession = ({ id }) => {
   const isLoading = useSelector(getProfessionsLoadingStatus());
   const prof = useSelector(getProfessionById(id));
+  console.log(prof);
   if (!isLoading) {
     return <p>{prof.name}</p>;
-  } else return "Загрузка...";
+  } else return "Загрузка ...";
 };
 Profession.propTypes = {
   id: PropTypes.string

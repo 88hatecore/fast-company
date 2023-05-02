@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { validator } from "../../../utils/validator";
 import TextField from "../../common/form/textField";
 import SelectField from "../../common/form/selectField";
 import RadioField from "../../common/form/radioField";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backButton";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   getQualities,
   getQualitiesLoadingStatus
@@ -18,11 +17,10 @@ import {
 import { getCurrentUserData, updateUser } from "../../../store/users";
 
 const EditUserPage = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState();
   const currentUser = useSelector(getCurrentUserData());
+  const dispatch = useDispatch();
   const qualities = useSelector(getQualities());
   const qualitiesLoading = useSelector(getQualitiesLoadingStatus());
   const qualitiesList = qualities.map((q) => ({
@@ -35,6 +33,7 @@ const EditUserPage = () => {
     label: p.name,
     value: p._id
   }));
+
   const [errors, setErrors] = useState({});
 
   const handleSubmit = (e) => {
@@ -47,8 +46,6 @@ const EditUserPage = () => {
         qualities: data.qualities.map((q) => q.value)
       })
     );
-
-    history.push(`/users/${currentUser._id}`);
   };
   function getQualitiesListByIds(qualitiesIds) {
     const qualitiesArray = [];
@@ -67,6 +64,7 @@ const EditUserPage = () => {
       label: qual.name,
       value: qual._id
     }));
+
     return result;
   };
   useEffect(() => {
@@ -92,15 +90,14 @@ const EditUserPage = () => {
         message: "Email введен некорректно"
       }
     },
+
     name: {
       isRequired: {
         message: "Введите ваше имя"
       }
     }
   };
-  useEffect(() => {
-    validate();
-  }, [data]);
+  useEffect(() => validate(), [data]);
   const handleChange = (target) => {
     setData((prevState) => ({
       ...prevState,
@@ -137,8 +134,8 @@ const EditUserPage = () => {
               <SelectField
                 label="Выбери свою профессию"
                 defaultOption="Choose..."
-                options={professionsList}
                 name="profession"
+                options={professionsList}
                 onChange={handleChange}
                 value={data.profession}
                 error={errors.profession}

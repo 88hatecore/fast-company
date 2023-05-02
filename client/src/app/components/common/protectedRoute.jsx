@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect } from "react-router";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { getIsLoggedIn } from "../../store/users";

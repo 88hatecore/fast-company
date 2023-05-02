@@ -19,17 +19,20 @@ const SelectField = ({
 
   const optionsArray =
     !Array.isArray(options) && typeof options === "object"
-      ? Object.values(options)
+      ? Object.keys(options).map((optionName) => ({
+          name: options[optionName].name,
+          value: options[optionName]._id
+        }))
       : options;
 
   return (
     <div className="mb-4">
-      <label htmlFor={name} className="form-label">
+      <label htmlFor="validationCustom04" className="form-label">
         {label}
       </label>
       <select
         className={getInputClasses()}
-        id={name}
+        id="validationCustom04"
         name={name}
         value={value}
         onChange={handleChange}
@@ -37,7 +40,7 @@ const SelectField = ({
         <option disabled value="">
           {defaultOption}
         </option>
-        {optionsArray.length > 0 &&
+        {optionsArray &&
           optionsArray.map((option) => (
             <option value={option.value} key={option.value}>
               {option.label}
@@ -48,7 +51,6 @@ const SelectField = ({
     </div>
   );
 };
-
 SelectField.propTypes = {
   defaultOption: PropTypes.string,
   label: PropTypes.string,

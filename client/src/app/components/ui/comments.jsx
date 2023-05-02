@@ -9,7 +9,7 @@ import {
   loadCommentsList,
   removeComment
 } from "../../store/comments";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 
 const Comments = () => {
   const { userId } = useParams();

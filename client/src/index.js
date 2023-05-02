@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./index.css";
 import { createStore } from "./app/store/createStore";
 import { Provider } from "react-redux";
-import { Router } from "react-router-dom";
+import { Router } from "react-router";
 import history from "./app/utils/history";
 
 const store = createStore();
